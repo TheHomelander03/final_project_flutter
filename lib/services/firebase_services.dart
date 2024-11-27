@@ -4,14 +4,15 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 
 Future<List> getFood() async {
   List food = [];
-  CollectionReference collectionReferenceFood = db.collection('food');
-  
-  QuerySnapshot queryFood = await collectionReferenceFood.get();
+  //CollectionReference collectionReferenceFood = db.collection('food');
+  QuerySnapshot queryFood = await db.collection('food').get();
+  for (var doc in queryFood.docs){
+    food.add(doc.data());
+  }
 
-  queryFood.docs.forEach((documento){
-    food.add(documento.data());
-
-  });
-await Future.delayed(const Duration(seconds: 3));
   return food;
+}
+//Save recipe for the data base
+Future<void> addRecipe(String recipe) async {
+  await db.collection("food").add({"recipe": recipe});
 }

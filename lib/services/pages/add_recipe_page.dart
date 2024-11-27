@@ -1,3 +1,4 @@
+import 'package:final_proyect/services/firebase_services.dart';
 import 'package:flutter/material.dart';
 
 class AddRecipePage extends StatefulWidget {
@@ -8,21 +9,33 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
+
+  TextEditingController nameController = TextEditingController(text: "");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Recipe"),
       ),
-      body: Column(
-        children:  [
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Add the new recipe'
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children:  [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                hintText: 'Add the new recipe'
+              ),
             ),
-          ),
-          ElevatedButton(onPressed: () {}, child: const Text("Save"))
-        ],
+            ElevatedButton(onPressed: () async {
+              await addRecipe(nameController.text).then((_){
+                Navigator.pop(context);
+              });
+            }, 
+            child: const Text("Save"))
+          ],
+        ),
       )
     );
   }

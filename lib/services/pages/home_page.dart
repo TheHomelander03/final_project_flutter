@@ -21,24 +21,24 @@ class _HomeState extends State<Home> {
         builder: ((context, snapshot){
           if (snapshot.hasData){
             return ListView.builder(
-            itemCount: snapshot.data?.length,
-            itemBuilder: (context, index){
-              return Text(snapshot.data?[index]['recipe']);
-            },
-          );
-        }else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+              itemCount: snapshot.data?.length,
+              itemBuilder: ((context, index){
+                return Text(snapshot.data?[index]['recipe']);
+              }));
+          }else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         }
-      }
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.pushNamed(context, '/add');
-        },
-        child: const Icon(Icons.add),
-        ),
-    );
+        )),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await Navigator.pushNamed(context, '/add');
+            setState(() {});
+          },
+          child: const Icon(Icons.add),
+          ),
+      );
+    }
   }
-}
